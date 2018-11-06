@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ZaepsDao">
+
+
+<select id="selectById" parameterType="String" resultType="com.zaeps.www.dto.zoo">
+	SELECT *
+	FROM GRAVE2.MEMBER
+	WHERE num = #{num}
+</select>
+
+<select id=""></select>
+
+<!-- 회원가입 -->
+<insert id="insertMember" parameterType="com.zaeps.www.dto.Grave">
+	<selectKey keyProperty="num" resultType="int" order="BEFORE">
+		select grave2.grave_seq.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO GRAVE2.MEMBER(
+		num,
+		name,
+		location,
+		latitude,
+		longtitude,
+		s_date,
+		img_path,
+		file_name
+	)
+	VALUES(
+		#{num},
+		#{name},
+		#{location},
+		#{latitude},
+		#{longtitude},
+		#{sDate},
+		#{imgPath},
+		#{fileName}
+	)
+</insert>
+
+<select id="selectZooById" parameterType="String" resultType="com.zaeps.www.dto.Zoo">
+	SELECT *
+	FROM ZAEPS.ZOO
+	WHERE id = #{id}
+</select>
+
+<select id="selectAniType" resultType="com.zaeps.www.dto.AniType">
+	SELECT *
+	FROM ZAEPS.ANI_TYPE
+</select>
+
+<insert id="insertUserReq" parameterType="com.zaeps.www.dto.UserReq">
+	<selectKey keyProperty="reqNo" resultType="int" order="BEFORE">
+		select zaeps.user_req_seq.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO ZAEPS.USER_REQ(
+		req_no,
+		zoo_no,
+		req_lat,
+		req_long,
+		ani_type_no,
+		ani_count
+	)
+	VALUES(
+		#{reqNo},
+		#{zooNo},
+		#{reqLat},
+		#{reqLong},
+		#{aniTypeNo},
+		#{aniCount}
+	)
+</insert>
+
+<!-- <insert id="insertAniLatLong">
+	<selectKey keyProperty="aniNo" resultType="int" order="BEFORE">
+		select zaeps.ani_seq.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO ZAEPS.ANI_LAT_LONG(
+		ani_no,
+		zoo_no,
+		ani_lat,
+		ani_long,
+		point_no,
+		ani_type,
+		regdate
+	)
+	VALUES(
+		#{aniNo},
+		#{zooNo},
+		#{aniLat},
+		#{aniLong},
+		#{pointNo},
+		#{aniType},
+		to_char(sysdate, 'YYYY/MM/DD HH24:MI:SS')
+	)
+</insert>
+
+<update id="updateAniLatLong">
+	UPDATE ZAEPS.ANI_LAT_LONG
+	SET ani_lat = #{aniLat}, ani_long = #{aniLong}, regdate = #{regdate}
+	WHERE ani_no = #{aniNo}
+</update> -->
+
+</mapper>
